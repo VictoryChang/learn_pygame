@@ -9,9 +9,14 @@ from game.utility import draw_text
 main_clock = pygame.time.Clock()
 
 
+
+screen_width = 500
+screen_height = 500
+
 pygame.init()
 pygame.display.set_caption('game base')
-screen = pygame.display.set_mode((500, 500), 0, 32)
+screen = pygame.display.set_mode((screen_width, screen_height), 0, 32)
+
 
 click = False
 
@@ -19,33 +24,35 @@ click = False
 def main_menu():
     while True:
         screen.fill(Color.black)
-        draw_text('main menu', Color.white, screen, 20, 20)
+        draw_text('main menu', Color.white, screen, screen_width / 2.0, screen_height / 2.0)
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
 
-        button_1 = pygame.Rect(50, 100, 200, 50)
-        button_2 = pygame.Rect(50, 200, 200, 50)
+        game_button = pygame.Rect(50, 100, 200, 50)
+        option_button = pygame.Rect(50, 200, 200, 50)
 
-        if button_1.collidepoint((mouse_x, mouse_y)):
+        if game_button.collidepoint((mouse_x, mouse_y)):
             if click:
                 game()
 
-        if button_2.collidepoint((mouse_x, mouse_y)):
+        if option_button.collidepoint((mouse_x, mouse_y)):
             if click:
                 options()
 
-        pygame.draw.rect(screen, (255, 0, 0), button_1)
-        pygame.draw.rect(screen, (255, 0, 0), button_2)
+        pygame.draw.rect(screen, Color.red, game_button)
+        pygame.draw.rect(screen, Color.red, option_button)
 
         click = False
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
+
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
                     pygame.quit()
                     sys.exit()
+
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
