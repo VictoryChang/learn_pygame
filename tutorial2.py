@@ -1,3 +1,5 @@
+import random
+
 import pygame
 
 from pygame.locals import K_UP, K_DOWN, K_LEFT, K_RIGHT, K_ESCAPE, KEYDOWN, QUIT
@@ -8,6 +10,9 @@ class Color:
     blue = (0, 0, 255)
     white = (255, 255, 255)
 
+screen_width = 800
+screen_height = 600
+
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
@@ -16,7 +21,7 @@ class Player(pygame.sprite.Sprite):
         self.surf.fill(Color.white)
         self.rect = self.surf.get_rect()
 
-    def update(self, pressed_key, screen_width: int, screen_height: int):
+    def update(self, pressed_key):
         """
         Move the sprite based on user keypress and keep the player on the screen
         """
@@ -39,7 +44,7 @@ class Player(pygame.sprite.Sprite):
             self.rect.bottom = screen_height
 
 
-def create_game(screen_width: int, screen_height: int):
+def create_game():
     pygame.init()
 
     screen = pygame.display.set_mode((screen_width, screen_height))
@@ -54,11 +59,11 @@ def create_game(screen_width: int, screen_height: int):
                     running = False
 
             pressed_key = pygame.key.get_pressed()
-            player.update(pressed_key, screen_width, screen_height)
+            player.update(pressed_key)
 
             screen.fill(Color.black)
             screen.blit(player.surf, player.rect)
             pygame.display.flip()
 
 
-create_game(screen_width=800, screen_height=600)
+create_game()
