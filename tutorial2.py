@@ -16,16 +16,27 @@ class Player(pygame.sprite.Sprite):
         self.surf.fill(Color.white)
         self.rect = self.surf.get_rect()
 
-    # Move the sprite based on user keypresses
-    def update(self, pressed_keys):
-        if pressed_keys[K_UP]:
+    def update(self, pressed_key, screen_width: int, screen_height: int):
+        """
+        Move the sprite based on user keypress and keep the player on the screen
+        """
+        if pressed_key[K_UP]:
             self.rect.move_ip(0, -5)  # move in place
-        if pressed_keys[K_DOWN]:
+        if pressed_key[K_DOWN]:
             self.rect.move_ip(0, 5)
-        if pressed_keys[K_LEFT]:
+        if pressed_key[K_LEFT]:
             self.rect.move_ip(-5, 0)
-        if pressed_keys[K_RIGHT]:
+        if pressed_key[K_RIGHT]:
             self.rect.move_ip(5, 0)
+
+        if self.rect.left < 0:
+            self.rect.left = 0
+        if self.rect.right > screen_width:
+            self.rect.right = screen_width
+        if self.rect.top <= 0:
+            self.rect.top = 0
+        if self.rect.bottom >= screen_height:
+            self.rect.bottom = screen_height
 
 
 def create_game(screen_width: int, screen_height: int):
@@ -42,8 +53,8 @@ def create_game(screen_width: int, screen_height: int):
                 if event.key == K_ESCAPE or event.type == QUIT:
                     running = False
 
-            pressed_keys = pygame.key.get_pressed()
-            player.update(pressed_keys)
+            pressed_key = pygame.key.get_pressed()
+            player.update(pressed_key, screen_width, screen_height)
 
             screen.fill(Color.black)
             screen.blit(player.surf, player.rect)
