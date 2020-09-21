@@ -2,25 +2,11 @@ import pygame
 
 from pygame.locals import K_UP, K_DOWN, K_LEFT, K_RIGHT, K_ESCAPE, KEYDOWN, QUIT
 
-
-class Color:
-    black = (0, 0, 0)
-    blue = (0, 0, 255)
-    white = (255, 255, 255)
-
-screen_width = 800
-screen_height = 600
+from game.constants import Color
+from game.utility import draw_text
 
 
-def draw_text(text, color, surface, x, y):
-    font = pygame.font.SysFont(None, 20)
-    text_object = font.render(text, 1, color)
-    text_rect = text_object.get_rect()
-    text_rect.topleft = (x, y)
-    surface.blit(text_object, text_rect)
-
-
-def main_menu():
+def main_menu(screen_width: int = 800, screen_height: int = 600):
     pygame.init()
 
     screen = pygame.display.set_mode((screen_width, screen_height))
