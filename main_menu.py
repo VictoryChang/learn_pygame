@@ -12,6 +12,14 @@ screen_width = 800
 screen_height = 600
 
 
+def draw_text(text, color, surface, x, y):
+    font = pygame.font.SysFont(None, 20)
+    text_object = font.render(text, 1, color)
+    text_rect = text_object.get_rect()
+    text_rect.topleft = (x, y)
+    surface.blit(text_object, text_rect)
+
+
 def main_menu():
     pygame.init()
 
@@ -28,6 +36,7 @@ def main_menu():
                 running = False
 
             screen.fill(Color.black)
+            draw_text(text='main menu', color=Color.white, surface=screen, x=20, y=20)
             pygame.display.flip()
 
 
